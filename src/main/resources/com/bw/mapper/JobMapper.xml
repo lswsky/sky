@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bw.mapper.JobMapper">
+	<select id="listall" resultType="com.bw.entity.Job">
+	SELECT j.`jid`,j.`jname`,j.`requirement`,j.`salary_start`,j.`salary_end`,j.`start_date`,
+	gc.lnames,i.`hname` FROM job j,industry i,
+	(SELECT GROUP_CONCAT(l.`lname`) lnames,jl.`job_id` FROM light l,job_light jl WHERE jl.`light_id`=l.`lid` GROUP BY jl.`job_id`) gc
+	WHERE gc.job_id=j.`jid` AND j.`industry1`=i.`hid`
+	</select>
+</mapper>
